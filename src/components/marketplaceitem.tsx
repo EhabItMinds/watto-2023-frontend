@@ -2,6 +2,8 @@ import React from 'react';
 import emitter from './../images/aurora_emitter.png';
 import { FragmentType, graphql, useFragment } from './../gql';
 import { useMutation } from '@apollo/client';
+import { Subscription } from '../gql/graphql';
+import { OwnItem } from './ownitem';
 
 const GetMarketItems = graphql(`
   fragment ItemFragment on Item {
@@ -25,14 +27,11 @@ const BuyItem = graphql(`
   }
 `);
 
-export const MarketplaceItem = (props: {
-  items: FragmentType<typeof GetMarketItems>;
-}) => {
-  const item = useFragment(GetMarketItems, props.items);
+export const MarketplaceItem = (items: Subscription['marketplace'][1]) => {
   const [purchaseItem] = useMutation(BuyItem, {
     variables: {
-      itemId: item.id,
-      sellerId: item.userId,
+      itemId: items.id,
+      sellerId: items.userId,
     },
     refetchQueries: 'active',
   });
@@ -50,16 +49,16 @@ export const MarketplaceItem = (props: {
       <div className="px-5 px-5 flex flex-col justify-between flex-grow">
         <div>
           <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-            {item.partName}
+            {items.partName}
           </h5>
           <p className="text-sm tracking-tight text-gray-900 dark:text-white">
-            {item.partDescription?.slice(0, 85)}
+            {items.partDescription?.slice(0, 85)}
           </p>
         </div>
         <div className="mb-4">
           <div className="flex items-center justify-between mt-2">
             <span className="text-3xl font-bold text-gray-900 dark:text-white">
-              ${item.price}
+              ${items.price}
             </span>
             <a
               onClick={(e) => {

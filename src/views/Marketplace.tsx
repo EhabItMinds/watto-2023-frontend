@@ -40,19 +40,18 @@ export const Marketplace = () => {
     console.log('cannot get the data');
   }
 
-  const { loading, error, data, refetch } = useQuery(GET_MARKET_ITEMS_QUERY);
+  // const { loading, error, data, refetch } = useQuery(GET_MARKET_ITEMS_QUERY);
+  // useEffect(() => {
+  //   refetch();
+  // }, [refetch]);
+  const { data, error, loading } = useSubscription(subMarketplace);
+
   useEffect(() => {
-    refetch();
-  }, [refetch]);
-  const {
-    loadingsub,
-    errorsub,
-    datasub: subdata,
-  } = useSubscription(subMarketplace);
-  console.log(subdata);
+    console.log(data);
+  }, [data]);
+
   return (
     <>
-      <h4>New comment: {!loadingsub && subdata.marketplace.id}</h4>;
       <Sidebar></Sidebar>
       <div className="p-1 sm:ml-64">
         <div className="flex flex-wrap gap-4 justify-center items-left ">
