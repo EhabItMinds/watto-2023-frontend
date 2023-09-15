@@ -21,7 +21,7 @@ export type Item = {
   id: Scalars['ID']['output'];
   partDescription?: Maybe<Scalars['String']['output']>;
   partName: Scalars['String']['output'];
-  price: Scalars['Float']['output'];
+  price?: Maybe<Scalars['Float']['output']>;
   saberPart: Scalars['String']['output'];
   userId?: Maybe<Scalars['String']['output']>;
 };
@@ -84,6 +84,12 @@ export type Query = {
   users: Array<User>;
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  UsersItems: Array<Item>;
+  marketplace: Array<Item>;
+};
+
 export type TradeArgs = {
   itemId: Scalars['String']['input'];
   sellerId: Scalars['String']['input'];
@@ -120,7 +126,7 @@ export type UserWithToken = {
   user?: Maybe<User>;
 };
 
-export type ItemFragmentFragment = { __typename?: 'Item', id: string, partName: string, partDescription?: string | null, price: number, userId?: string | null } & { ' $fragmentName'?: 'ItemFragmentFragment' };
+export type ItemFragmentFragment = { __typename?: 'Item', id: string, partName: string, partDescription?: string | null, price?: number | null, userId?: string | null } & { ' $fragmentName'?: 'ItemFragmentFragment' };
 
 export type BuyAnItemMutationVariables = Exact<{
   itemId: Scalars['String']['input'];
@@ -130,7 +136,12 @@ export type BuyAnItemMutationVariables = Exact<{
 
 export type BuyAnItemMutation = { __typename?: 'Mutation', purchaseItem?: { __typename?: 'User', username: string, money: number, inventory: Array<{ __typename?: 'Item', partName: string }> } | null };
 
-export type UserItemFragmentFragment = { __typename?: 'Item', id: string, partName: string, price: number, userId?: string | null } & { ' $fragmentName'?: 'UserItemFragmentFragment' };
+export type MarketplaceSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MarketplaceSubscription = { __typename?: 'Subscription', marketplace: Array<{ __typename?: 'Item', id: string, partDescription?: string | null, saberPart: string, price?: number | null, partName: string, userId?: string | null }> };
+
+export type UserItemFragmentFragment = { __typename?: 'Item', id: string, partName: string, price?: number | null, userId?: string | null } & { ' $fragmentName'?: 'UserItemFragmentFragment' };
 
 export type SellAnItemMutationVariables = Exact<{
   itemId: Scalars['String']['input'];
@@ -184,6 +195,7 @@ export type AddtoUserDetailesMutation = { __typename?: 'Mutation', updateUserDet
 export const ItemFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ItemFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Item"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"partDescription"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]} as unknown as DocumentNode<ItemFragmentFragment, unknown>;
 export const UserItemFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserItemFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Item"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]} as unknown as DocumentNode<UserItemFragmentFragment, unknown>;
 export const BuyAnItemDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"BuyAnItem"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"itemId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sellerId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"purchaseItem"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"itemId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"itemId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"sellerId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sellerId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"money"}},{"kind":"Field","name":{"kind":"Name","value":"inventory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"partName"}}]}}]}}]}}]} as unknown as DocumentNode<BuyAnItemMutation, BuyAnItemMutationVariables>;
+export const MarketplaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"Marketplace"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"marketplace"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"partDescription"}},{"kind":"Field","name":{"kind":"Name","value":"saberPart"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]} as unknown as DocumentNode<MarketplaceSubscription, MarketplaceSubscriptionVariables>;
 export const SellAnItemDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SellAnItem"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"itemId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sellerId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sellItem"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"itemId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"itemId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"sellerId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sellerId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"money"}},{"kind":"Field","name":{"kind":"Name","value":"inventory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"partName"}}]}}]}}]}}]} as unknown as DocumentNode<SellAnItemMutation, SellAnItemMutationVariables>;
 export const TestLogingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"TestLoging"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"money"}}]}},{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<TestLogingMutation, TestLogingMutationVariables>;
 export const GetMarketItemsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMarketItems"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getMarketItems"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"ItemFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ItemFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Item"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"partDescription"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]} as unknown as DocumentNode<GetMarketItemsQuery, GetMarketItemsQueryVariables>;

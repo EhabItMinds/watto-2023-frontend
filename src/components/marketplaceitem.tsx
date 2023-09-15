@@ -1,7 +1,7 @@
 import React from 'react';
 import emitter from './../images/aurora_emitter.png';
 import { FragmentType, graphql, useFragment } from './../gql';
-import { useMutation } from '@apollo/client';
+import { useMutation, useSubscription } from '@apollo/client';
 
 const GetMarketItems = graphql(`
   fragment ItemFragment on Item {
@@ -24,6 +24,18 @@ const BuyItem = graphql(`
     }
   }
 `);
+const subMarketplace = graphql(`
+  subscription Marketplace {
+    marketplace {
+      id
+      partDescription
+      saberPart
+      price
+      partName
+      userId
+    }
+  }
+`);
 
 export const MarketplaceItem = (props: {
   items: FragmentType<typeof GetMarketItems>;
@@ -36,6 +48,7 @@ export const MarketplaceItem = (props: {
     },
     refetchQueries: ['GetMarketItems'],
   });
+  const { loading, error, data } = useSubscription(subMarketplace);
 
   return (
     <div className="w-72 h-[330px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col flex justify-center items-center">

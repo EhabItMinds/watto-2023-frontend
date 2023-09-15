@@ -29,7 +29,7 @@ export const OwnItem = (props: { items: FragmentType<typeof GetUserItem> }) => {
   const [sellItem] = useMutation(SellItem, {
     variables: {
       itemId: item.id,
-      sellerId: 'clmixf8o50000kees7k4x9h6m',
+      sellerId: 'clmesij9r0000klbkv1tyxtud',
     },
     refetchQueries: 'active',
   });
