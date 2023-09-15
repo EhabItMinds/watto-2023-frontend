@@ -9,7 +9,7 @@ const GET_USER_ITEMS_QUERY = graphql(`
   query GetUserItems {
     getUserItems {
       id
-      ...ItemFragment
+      # ...ItemFragment
     }
   }
 `);

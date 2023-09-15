@@ -1,7 +1,7 @@
 import React from 'react';
 import emitter from './../images/aurora_emitter.png';
 import { FragmentType, graphql, useFragment } from './../gql';
-import { useMutation, useSubscription } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
 const GetMarketItems = graphql(`
   fragment ItemFragment on Item {
@@ -24,18 +24,6 @@ const BuyItem = graphql(`
     }
   }
 `);
-const subMarketplace = graphql(`
-  subscription Marketplace {
-    marketplace {
-      id
-      partDescription
-      saberPart
-      price
-      partName
-      userId
-    }
-  }
-`);
 
 export const MarketplaceItem = (props: {
   items: FragmentType<typeof GetMarketItems>;
@@ -46,9 +34,8 @@ export const MarketplaceItem = (props: {
       itemId: item.id,
       sellerId: item.userId,
     },
-    refetchQueries: ['GetMarketItems'],
+    refetchQueries: 'active',
   });
-  const { loading, error, data } = useSubscription(subMarketplace);
 
   return (
     <div className="w-72 h-[330px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col flex justify-center items-center">
@@ -79,7 +66,6 @@ export const MarketplaceItem = (props: {
                 e.preventDefault();
                 purchaseItem();
               }}
-              href="#"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Buy
