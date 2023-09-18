@@ -21,7 +21,7 @@ export type Item = {
   id: Scalars['ID']['output'];
   partDescription?: Maybe<Scalars['String']['output']>;
   partName: Scalars['String']['output'];
-  price: Scalars['Float']['output'];
+  price?: Maybe<Scalars['Float']['output']>;
   saberPart: Scalars['String']['output'];
   userId?: Maybe<Scalars['String']['output']>;
 };
@@ -79,9 +79,16 @@ export type Query = {
   __typename?: 'Query';
   /** @deprecated This is the root type */
   _deprecated_field?: Maybe<Scalars['String']['output']>;
+  activeUser: User;
   getMarketItems: Array<Item>;
   getUserItems: Array<Item>;
   users: Array<User>;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  UsersItems: Array<Item>;
+  marketplace: Array<Item>;
 };
 
 export type TradeArgs = {
@@ -120,7 +127,7 @@ export type UserWithToken = {
   user?: Maybe<User>;
 };
 
-export type ItemFragmentFragment = { __typename?: 'Item', id: string, partName: string, partDescription?: string | null, price: number, userId?: string | null } & { ' $fragmentName'?: 'ItemFragmentFragment' };
+export type ItemFragmentFragment = { __typename?: 'Item', id: string, partName: string, partDescription?: string | null, price?: number | null, userId?: string | null } & { ' $fragmentName'?: 'ItemFragmentFragment' };
 
 export type BuyAnItemMutationVariables = Exact<{
   itemId: Scalars['String']['input'];
@@ -130,7 +137,7 @@ export type BuyAnItemMutationVariables = Exact<{
 
 export type BuyAnItemMutation = { __typename?: 'Mutation', purchaseItem?: { __typename?: 'User', username: string, money: number, inventory: Array<{ __typename?: 'Item', partName: string }> } | null };
 
-export type UserItemFragmentFragment = { __typename?: 'Item', id: string, partName: string, price: number, userId?: string | null } & { ' $fragmentName'?: 'UserItemFragmentFragment' };
+export type UserItemFragmentFragment = { __typename?: 'Item', id: string, partName: string, price?: number | null, userId?: string | null } & { ' $fragmentName'?: 'UserItemFragmentFragment' };
 
 export type SellAnItemMutationVariables = Exact<{
   itemId: Scalars['String']['input'];
