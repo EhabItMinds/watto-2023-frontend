@@ -13,12 +13,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  fragment ItemFragment on Item {\n    id\n    partName\n    partDescription\n    price\n    userId\n  }\n": types.ItemFragmentFragmentDoc,
     "\n  mutation BuyAnItem($itemId: String!, $sellerId: String!) {\n    purchaseItem(input: { itemId: $itemId, sellerId: $sellerId }) {\n      username\n      money\n      inventory {\n        partName\n      }\n    }\n  }\n": types.BuyAnItemDocument,
     "\n  fragment UserItemFragment on Item {\n    id\n    partName\n    price\n    userId\n  }\n": types.UserItemFragmentFragmentDoc,
     "\n  mutation SellAnItem($itemId: String!, $sellerId: String!) {\n    sellItem(input: { itemId: $itemId, sellerId: $sellerId }) {\n      username\n      money\n      inventory {\n        partName\n      }\n    }\n  }\n": types.SellAnItemDocument,
     "\n  mutation TestLoging($username: String!, $password: String!) {\n    login(input: { username: $username, password: $password }) {\n      user {\n        id\n        username\n        money\n      }\n      token\n    }\n  }\n": types.TestLogingDocument,
-    "\n  query GetMarketItems {\n    getMarketItems {\n      id\n      ...ItemFragment\n    }\n  }\n": types.GetMarketItemsDocument,
     "\n  subscription Marketplace {\n    marketplace {\n      id\n      partDescription\n      saberPart\n      price\n      partName\n      userId\n    }\n  }\n": types.MarketplaceDocument,
     "\n  query GetUserItems {\n    getUserItems {\n      id\n      # ...ItemFragment\n    }\n  }\n": types.GetUserItemsDocument,
     "\n  mutation SingupOpreation($username: String!, $password: String!) {\n    Signup(input: { username: $username, password: $password }) {\n      token\n      user {\n        id\n      }\n    }\n  }\n": types.SingupOpreationDocument,
@@ -42,10 +40,6 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  fragment ItemFragment on Item {\n    id\n    partName\n    partDescription\n    price\n    userId\n  }\n"): (typeof documents)["\n  fragment ItemFragment on Item {\n    id\n    partName\n    partDescription\n    price\n    userId\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
 export function graphql(source: "\n  mutation BuyAnItem($itemId: String!, $sellerId: String!) {\n    purchaseItem(input: { itemId: $itemId, sellerId: $sellerId }) {\n      username\n      money\n      inventory {\n        partName\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation BuyAnItem($itemId: String!, $sellerId: String!) {\n    purchaseItem(input: { itemId: $itemId, sellerId: $sellerId }) {\n      username\n      money\n      inventory {\n        partName\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -59,10 +53,6 @@ export function graphql(source: "\n  mutation SellAnItem($itemId: String!, $sell
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation TestLoging($username: String!, $password: String!) {\n    login(input: { username: $username, password: $password }) {\n      user {\n        id\n        username\n        money\n      }\n      token\n    }\n  }\n"): (typeof documents)["\n  mutation TestLoging($username: String!, $password: String!) {\n    login(input: { username: $username, password: $password }) {\n      user {\n        id\n        username\n        money\n      }\n      token\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "\n  query GetMarketItems {\n    getMarketItems {\n      id\n      ...ItemFragment\n    }\n  }\n"): (typeof documents)["\n  query GetMarketItems {\n    getMarketItems {\n      id\n      ...ItemFragment\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

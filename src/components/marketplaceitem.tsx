@@ -1,19 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import emitter from './../images/aurora_emitter.png';
-import { FragmentType, graphql, useFragment } from './../gql';
+import { graphql } from './../gql';
 import { useMutation } from '@apollo/client';
 import { Subscription } from '../gql/graphql';
-import { OwnItem } from './ownitem';
-
-const GetMarketItems = graphql(`
-  fragment ItemFragment on Item {
-    id
-    partName
-    partDescription
-    price
-    userId
-  }
-`);
 
 const BuyItem = graphql(`
   mutation BuyAnItem($itemId: String!, $sellerId: String!) {
@@ -27,11 +16,15 @@ const BuyItem = graphql(`
   }
 `);
 
-export const MarketplaceItem = (items: Subscription['marketplace'][1]) => {
+type Props = {
+  marketItem: Subscription['marketplace'][1];
+};
+
+export const MarketplaceItem: FC<Props> = ({ marketItem }) => {
   const [purchaseItem] = useMutation(BuyItem, {
     variables: {
-      itemId: items.id,
-      sellerId: items.userId,
+      itemId: marketItem.id,
+      sellerId: marketItem.userId ?? '',
     },
     refetchQueries: 'active',
   });
@@ -49,16 +42,16 @@ export const MarketplaceItem = (items: Subscription['marketplace'][1]) => {
       <div className="px-5 px-5 flex flex-col justify-between flex-grow">
         <div>
           <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-            {items.partName}
+            {marketItem.partName}
           </h5>
           <p className="text-sm tracking-tight text-gray-900 dark:text-white">
-            {items.partDescription?.slice(0, 85)}
+            {marketItem.partDescription?.slice(0, 85)}
           </p>
         </div>
         <div className="mb-4">
           <div className="flex items-center justify-between mt-2">
             <span className="text-3xl font-bold text-gray-900 dark:text-white">
-              ${items.price}
+              ${marketItem.price}
             </span>
             <a
               onClick={(e) => {
@@ -74,4 +67,13 @@ export const MarketplaceItem = (items: Subscription['marketplace'][1]) => {
       </div>
     </div>
   );
+};
+
+type Tester = {
+  name: string;
+  age: number;
+};
+
+export const MyComp: FC<Tester> = () => {
+  return <div></div>;
 };

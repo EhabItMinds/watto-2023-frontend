@@ -2,20 +2,11 @@ import React, { useEffect } from 'react';
 import { Sidebar } from '../components/sidebar';
 import { MarketplaceItem } from '../components/marketplaceitem';
 import { graphql } from './../gql';
-import { useQuery, useSubscription } from '@apollo/client';
+import { useSubscription } from '@apollo/client';
 import { Spinner } from '../components/spinner';
 import { isLogin } from '../State';
-import { makeVar, useReactiveVar } from '@apollo/client';
-import { Link, useNavigate } from 'react-router-dom';
-
-const GET_MARKET_ITEMS_QUERY = graphql(`
-  query GetMarketItems {
-    getMarketItems {
-      id
-      ...ItemFragment
-    }
-  }
-`);
+import { useReactiveVar } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
 
 const subMarketplace = graphql(`
   subscription Marketplace {
@@ -58,8 +49,8 @@ export const Marketplace = () => {
           {loading && <Spinner></Spinner>}
           {error && <p>Error! {error.message}</p>}
           {!loading &&
-            data?.getMarketItems?.map((item) => (
-              <MarketplaceItem key={item.id} items={item} />
+            data?.marketplace?.map((item) => (
+              <MarketplaceItem key={item.id} marketItem={item} />
             ))}
         </div>
       </div>
