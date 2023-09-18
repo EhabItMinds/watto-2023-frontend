@@ -79,6 +79,7 @@ export type Query = {
   __typename?: 'Query';
   /** @deprecated This is the root type */
   _deprecated_field?: Maybe<Scalars['String']['output']>;
+  activeUser: User;
   getMarketItems: Array<Item>;
   getUserItems: Array<Item>;
   users: Array<User>;
