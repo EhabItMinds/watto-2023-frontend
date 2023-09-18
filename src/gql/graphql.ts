@@ -127,6 +127,8 @@ export type UserWithToken = {
   user?: Maybe<User>;
 };
 
+export type ItemFragmentFragment = { __typename?: 'Item', id: string, partName: string, partDescription?: string | null, price?: number | null, userId?: string | null } & { ' $fragmentName'?: 'ItemFragmentFragment' };
+
 export type BuyAnItemMutationVariables = Exact<{
   itemId: Scalars['String']['input'];
   sellerId: Scalars['String']['input'];
